@@ -1,6 +1,8 @@
 package com.nit;
+
 import java.util.*;
 
+// Main Application Class
 public class ECommerceApp {
     private static Scanner scanner = new Scanner(System.in);
     private static List<User> users = new ArrayList<>();
@@ -14,8 +16,7 @@ public class ECommerceApp {
         while (true) {
             System.out.println("\n1. Register\n2. Login\n3. Exit");
             System.out.print("Choose an option: ");
-            int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
+            int choice = getIntInput();
 
             switch (choice) {
                 case 1 -> registerUser();
@@ -36,9 +37,22 @@ public class ECommerceApp {
         products.add(new Product(3, "Headphones", "Noise-cancelling headphones", 2000, 20));
     }
 
+    // Get integer input with validation
+    private static int getIntInput() {
+        while (true) {
+            try {
+                return scanner.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number.");
+                scanner.nextLine(); // Clear invalid input
+            }
+        }
+    }
+
     // User Registration
     private static void registerUser() {
         System.out.print("Enter username: ");
+        scanner.nextLine(); // Consume newline
         String username = scanner.nextLine();
         System.out.print("Enter password: ");
         String password = scanner.nextLine();
@@ -50,6 +64,7 @@ public class ECommerceApp {
     // User Login
     private static void loginUser() {
         System.out.print("Enter username: ");
+        scanner.nextLine(); // Consume newline
         String username = scanner.nextLine();
         System.out.print("Enter password: ");
         String password = scanner.nextLine();
@@ -71,8 +86,7 @@ public class ECommerceApp {
         while (true) {
             System.out.println("\n1. View Products\n2. Add to Cart\n3. View Cart\n4. Checkout\n5. Logout");
             System.out.print("Choose an option: ");
-            int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
+            int choice = getIntInput();
 
             switch (choice) {
                 case 1 -> viewProducts();
@@ -99,7 +113,7 @@ public class ECommerceApp {
     // Add Product to Cart
     private static void addToCart(String username) {
         System.out.print("Enter Product ID to add to cart: ");
-        int productId = scanner.nextInt();
+        int productId = getIntInput();
 
         Product product = products.stream()
                 .filter(p -> p.getId() == productId && p.getStock() > 0)
